@@ -2,11 +2,15 @@ const mongoose = require('mongoose');
 
 
 const ProductsSchema = new mongoose.Schema({
-    name: {type: String, required: true, unique: true}, 
-    stamp: {type: String, required: true, unique: true}, 
-    price: {type: String, required: true, unique: true}, 
-    categorie: {type: String, required: true, unique: true}, //alimentação, limpeza, mobilia, eletro
-    group: {type: String, required: true, unique: true}, //normal, campanha, promo, desconto
+    product: {type: String, required: true}, //biscoito, bolacha, pao, manteiga...
+    characteristics: {type: String, required: true}, //15g, 60ml, 1L....
+    stamp: { type: String, required: true }, //richester, omo, qualy
+    price: { type: Number, required: true }, //"R$" + valor
+    categorie: { type: String, required: true }, //alimentação, limpeza, mobilia, eletro
+    subCategorie: { type: String, required: true }, //higiene pessoal, frios, enlatados, graos...
+    group: { type: String, required: true}, //normal, campanha, promo, desconto
+    inventory: {type: Number, required: true}, //quantidade
+    name: { type: String, required: true, unique: true }, //product + characteristics + stamp
 });
 
 module.exports = mongoose.model('product', ProductsSchema);
