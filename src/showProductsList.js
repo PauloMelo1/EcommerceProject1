@@ -5,9 +5,6 @@ const productsModel = require('./models/productsModel')
 const userModel = require('./models/userModel')
 
 
-connectDb()
-const app = express()
-app.use(express.json());
 
 
 const saltRounds = 10;

@@ -4,7 +4,7 @@ const userModel = require('./models/userModel')
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
-const createUser = require ('./usersCreation');
+const createUser = require ('./userCreation');
 const createProduct = require ('./productsCreation');
 const showProductsList = require ('./ShowProductsList');
 const showProductsListByType = require ('./ShowProductsListByType');
@@ -47,7 +47,7 @@ async function loginAccess(req, res) {
       email: user.email,
       phone: user.phone
     }
-    const token = jwt.sign(userDTO, "assinaturaDeConexao", {
+    const token = jwt.sign(userDTO, process.env.JWT_KEY, {
       expiresIn: "1h"
     })
     res.json({
@@ -63,7 +63,11 @@ async function loginAccess(req, res) {
 
 function verifyToken(req, res, next) {
   try {
-    const checkToken = jwt.verify(req.body.token, "assinaturaDeConexao")
+    const token = req.headers.authorization
+    if (!token) {
+      throw new Error('Token invalidado')
+    }
+    const checkToken = jwt.verify(token, process.env.JWT_KEY)
     next()
   } catch (error) {
     res.status(401).json({ error: 'Token invalido, faça login novamente' })
@@ -78,11 +82,11 @@ function verifyToken(req, res, next) {
 
 
 app.post('/users/create', createUser)
-app.post('/products/create', createProduct)
+app.post('/products/create', verifyToken, createProduct)
 app.post('/users/login', loginAccess)
-app.post('/users/list', verifyToken, listAllUsers)
-app.get('/products/list', showProductsList)
-app.get('/products/list/by-type', showProductsListByType)
+app.post('/users/list', listAllUsers)
+app.get('/products/list', verifyToken, showProductsList)
+app.get('/products/list/by-type', verifyToken, showProductsListByType)
 
 
 

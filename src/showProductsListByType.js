@@ -4,9 +4,6 @@ const express = require('express')
 const productsModel = require('./models/productsModel')
 
 
-connectDb()
-const app = express()
-app.use(express.json());
 
 
 const saltRounds = 10;

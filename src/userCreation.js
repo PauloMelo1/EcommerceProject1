@@ -5,10 +5,6 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 
-connectDb()
-const app = express()
-app.use(express.json());
-
 
 const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
