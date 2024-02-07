@@ -74,22 +74,11 @@ function verifyToken(req, res, next) {
   }
 }
 
-// if (userLogin && userPassword) {
-//   res.send('Logado com sucesso')
-// } else {
-//   res.send ('Usuário e/ou senha incorrento(s)!')
-// }
-
-
 app.post('/users/create', createUser)
 app.post('/products/create', verifyToken, createProduct)
 app.post('/users/login', loginAccess)
 app.post('/users/list', listAllUsers)
 app.get('/products/list', verifyToken, showProductsList)
 app.get('/products/list/by-type', verifyToken, showProductsListByType)
-
-
-
-
 
 app.listen(7575, () => console.log('Server ON!!'))
