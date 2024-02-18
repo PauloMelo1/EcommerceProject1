@@ -3,7 +3,7 @@ const express = require('express')
 const productsModel = require("./models/productsModel")
 
 
-async function deleteProduct(req, res) {
+async function updateProductInventory(req, res) {
     const { name } = req.body
     if (!name) {
         res.send('Preencha com o nome de um produto')
@@ -15,8 +15,11 @@ async function deleteProduct(req, res) {
         return
     }
     if (productFinder) {
-        await productsModel.deleteOne({_id: productFinder._id})
-        res.send(`${productFinder.name} foi removido do catálogo!`)
+        await productsModel.updateOne(
+            { _id: productFinder._id },
+            { inventory: req.body.inventory }
+        )
+        res.send(`O estoque de ${productFinder.name} foi ajustado para ${req.body.inventory}`)
     }
 }
-module.exports = deleteProduct
+module.exports = updateProductInventory
