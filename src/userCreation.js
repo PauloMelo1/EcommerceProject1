@@ -24,7 +24,7 @@ async function createUser(req, res) {
   
     if (input.name.length < 2) {
       res.send('Preencha seu nome')
-      return app.post('/users/create', createUser)
+      return
     }
     const userDocument = await userModel.findOne({ document: input.document })
     if (userDocument) {
@@ -82,7 +82,7 @@ async function createUser(req, res) {
   
     await userModel.create(input)
 
-    res.send('Usuário cadastrado com sucesso!')
+    // res.send('Usuário cadastrado com sucesso!')
     res.send(input)
   
   }

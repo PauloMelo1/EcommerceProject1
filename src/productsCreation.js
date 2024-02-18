@@ -6,9 +6,7 @@ const productsModel = require('./models/productsModel')
 
 
 
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+
 
 async function createProduct(req, res) {
     const input = {
@@ -20,9 +18,9 @@ async function createProduct(req, res) {
         subCategorie: req.body.subCategorie,
         group: req.body.group,
         inventory: req.body.inventory,
-        name: req.body.product + req.body.characteristics + req.body.stamp
+        name: (`${req.body.product} ${req.body.characteristics} ${req.body.stamp}`)
     }
-
+    
     if (!input.product) {
         res.send('Insira o produto (bistoito, panela, sabão ...)')
         return
@@ -35,12 +33,18 @@ async function createProduct(req, res) {
         res.send(`Insira a marca de ${input.product + " " + input.characteristics} (Nestlé, Omo, Vonix...)`)
         return
     }
+    const productName = await productsModel.findOne({ name: input.name })
+    if (productName) {
+      res.send('Produto já possui cadastro')
+      return
+    }
     if (!input.price) {
         res.send(`Insira o preço do ${input.product + " " + input.characteristics} (EX: 1800,25)`)
         return
     }
     if (isNaN(input.price)) {
         res.send('Insira o preço apenas com números (EX: 1800,25)')
+        return
     }
     if (!input.categorie) {
         res.send(`Indique a qual categoria  ${input.product + " " + input.characteristics} pertence (alimentação, limpeza, eletro...)`)
@@ -62,7 +66,7 @@ async function createProduct(req, res) {
         res.send('Digite apenas números para a quantidade do estoque')
         return
     }
-
+    
     await productsModel.create(input)
     res.send(`Produto ${input.product + " " + input.characteristics + " " + input.stamp} cadastrado com sucesso!!!`  )
 }
