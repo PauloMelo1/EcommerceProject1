@@ -24,3 +24,4 @@ async function showProductsList(req, res) {
 
 }
 module.exports = showProductsList
+testesteste
