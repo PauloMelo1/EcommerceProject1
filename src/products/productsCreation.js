@@ -1,7 +1,7 @@
 
-const connectDb = require('./mongoDb')
+const connectDb = require('../mongoDb')
 const express = require('express')
-const productsModel = require('./models/productsModel')
+const productsModel = require('../models/productsModel')
 
 
 

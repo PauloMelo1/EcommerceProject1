@@ -1,9 +1,9 @@
-const connectDb = require('./mongoDb')
+const connectDb = require('../mongoDb')
 const express = require('express')
-const productsModel = require("./models/productsModel")
+const productsModel = require("../models/productsModel")
 
 
-async function updateProductPrice(req, res) {
+async function updateProductInventory(req, res) {
     const { name } = req.body
     if (!name) {
         res.send('Preencha com o nome de um produto')
@@ -17,9 +17,9 @@ async function updateProductPrice(req, res) {
     if (productFinder) {
         await productsModel.updateOne(
             { _id: productFinder._id },
-            { price: req.body.price }
+            { inventory: req.body.inventory }
         )
-        res.send(`O valor de ${productFinder.name} foi alterado para R$${req.body.price}`)
+        res.send(`O estoque de ${productFinder.name} foi ajustado para ${req.body.inventory}`)
     }
 }
-module.exports = updateProductPrice
+module.exports = updateProductInventory

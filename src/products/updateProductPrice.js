@@ -1,9 +1,9 @@
-const connectDb = require('./mongoDb')
+const connectDb = require('../mongoDb')
 const express = require('express')
-const productsModel = require("./models/productsModel")
+const productsModel = require("../models/productsModel")
 
 
-async function updateProductGroup(req, res) {
+async function updateProductPrice(req, res) {
     const { name } = req.body
     if (!name) {
         res.send('Preencha com o nome de um produto')
@@ -17,9 +17,9 @@ async function updateProductGroup(req, res) {
     if (productFinder) {
         await productsModel.updateOne(
             { _id: productFinder._id },
-            { group: req.body.group }
+            { price: req.body.price }
         )
-        res.send(`${productFinder.name} alterado para o grupo ${req.body.group}!`)
+        res.send(`O valor de ${productFinder.name} foi alterado para R$${req.body.price}`)
     }
 }
-module.exports = updateProductGroup
+module.exports = updateProductPrice

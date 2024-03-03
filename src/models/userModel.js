@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true}, //unique > evita repetiçoes se for TRUE, se for FALSE aceita repetiçao
     password: {type: String, required: true},
     phone: {type: String, required: true, unique: true},
+    accessLevel: {type: String, required: true, unique: true},
     // preference: {type: String, required: true},
 });
 
